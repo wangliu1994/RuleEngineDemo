@@ -1,0 +1,30 @@
+package droolRule;
+import com.example.drooldemo.entity.QueryParam
+import org.slf4j.LoggerFactory
+import org.slf4j.Logger
+import com.example.drooldemo.service.RuleDemoService
+import com.example.drooldemo.service.RuleDemoServiceImpl ;
+
+
+dialect "java"
+rule "rule3"
+   salience 96
+   when queryParam: QueryParam(paramSign.equals("*"))
+         resultParam: Integer()
+   then
+          final Logger LOGGER = LoggerFactory.getLogger("乘法 规则引擎");
+          LOGGER.info("参数:param1="+queryParam.getParam1()+ ", param2="+queryParam.getParam2()+"; paramSign="+queryParam.getParamSign());
+          RuleDemoService ruleDemoService = new RuleDemoServiceImpl();
+          resultParam = ruleDemoService.mulParam(queryParam);
+end
+
+rule "rule4"
+    salience 95
+    when queryParam: QueryParam(paramSign.equals("/"))
+          resultParam: Integer()
+    then
+         final Logger LOGGER = LoggerFactory.getLogger("除法 规则引擎");
+         LOGGER.info("参数:param1="+queryParam.getParam1()+ ", param2="+queryParam.getParam2()+"; paramSign="+queryParam.getParamSign());
+         RuleDemoService ruleDemoService = new RuleDemoServiceImpl();
+         resultParam = ruleDemoService.divParam(queryParam);
+ end
