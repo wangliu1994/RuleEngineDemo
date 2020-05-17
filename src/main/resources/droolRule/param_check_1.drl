@@ -1,5 +1,6 @@
 package droolRule;
 import com.example.drooldemo.entity.QueryParam
+import com.example.drooldemo.entity.ResultParam;
 import org.slf4j.LoggerFactory
 import org.slf4j.Logger
 import com.example.drooldemo.service.RuleDemoService
@@ -9,6 +10,7 @@ import com.example.drooldemo.service.RuleDemoServiceImpl ;
 dialect "java"
 rule "rule1"
    salience 99
+    //如果when这里有两个入参，则需要kieSession同时insert这两个参数才会触发引擎
    when queryParam: QueryParam(paramSign.equals("+"))
          resultParam: Integer()
    then
@@ -16,15 +18,39 @@ rule "rule1"
           LOGGER.info("参数:param1="+queryParam.getParam1()+ ", param2="+queryParam.getParam2()+"; paramSign="+queryParam.getParamSign());
           RuleDemoService ruleDemoService = new RuleDemoServiceImpl();
           resultParam = ruleDemoService.addParam(queryParam);
+          queryParam.setResult(resultParam);
 end
 
 rule "rule2"
     salience 98
     when queryParam: QueryParam(paramSign.equals("-"))
-          resultParam: Integer()
     then
          final Logger LOGGER = LoggerFactory.getLogger("减法 规则引擎");
          LOGGER.info("参数:param1="+queryParam.getParam1()+ ", param2="+queryParam.getParam2()+"; paramSign="+queryParam.getParamSign());
          RuleDemoService ruleDemoService = new RuleDemoServiceImpl();
-         resultParam = ruleDemoService.subParam(queryParam);
+         queryParam.setResult(ruleDemoService.subParam(queryParam));
  end
+
+
+ rule "rule3"
+    salience 96
+    when queryParam: QueryParam(paramSign.equals("*"))
+          resultParam: ResultParam()
+    then
+           final Logger LOGGER = LoggerFactory.getLogger("乘法 规则引擎");
+           LOGGER.info("参数:param1="+queryParam.getParam1()+ ", param2="+queryParam.getParam2()+"; paramSign="+queryParam.getParamSign());
+           RuleDemoService ruleDemoService = new RuleDemoServiceImpl();
+           resultParam.setResult(ruleDemoService.mulParam(queryParam));
+ end
+
+
+ rule "rule4"
+     salience 95
+     when queryParam: QueryParam(paramSign.equals("/"))
+           resultParam: ResultParam()
+     then
+          final Logger LOGGER = LoggerFactory.getLogger("除法 规则引擎");
+          LOGGER.info("参数:param1="+queryParam.getParam1()+ ", param2="+queryParam.getParam2()+"; paramSign="+queryParam.getParamSign());
+          RuleDemoService ruleDemoService = new RuleDemoServiceImpl();
+          resultParam.setResult(ruleDemoService.divParam(queryParam));
+  end
