@@ -19,7 +19,7 @@ class DroolsDemoApplicationTests {
     @Resource
     private RuleDemoService ruleEngineService;
 
-    private Logger logger = LoggerFactory.getLogger("RuleDemoController");
+    private Logger logger = LoggerFactory.getLogger("DroolsDemoApplicationTests");
 
     @Test
     void contextLoads() {

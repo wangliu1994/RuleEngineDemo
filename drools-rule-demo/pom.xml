@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.winnie</groupId>
-    <artifactId>DroolsRuleDemo</artifactId>
+    <artifactId>drools-rule-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>DroolsRuleDemo</name>
+    <name>drools-rule-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

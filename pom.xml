@@ -9,7 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>DroolsRuleDemo</module>
+        <module>drools-rule-demo</module>
+        <module>easy-rule-demo</module>
     </modules>
 
 </project>
