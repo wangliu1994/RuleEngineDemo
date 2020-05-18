@@ -2,10 +2,7 @@ package com.example.easyruledemo.rule;
 
 import com.example.easyruledemo.entity.QueryParam;
 import com.example.easyruledemo.service.RuleDemoService;
-import org.jeasy.rules.annotation.Action;
-import org.jeasy.rules.annotation.Condition;
-import org.jeasy.rules.annotation.Priority;
-import org.jeasy.rules.annotation.Rule;
+import org.jeasy.rules.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,20 +11,18 @@ import org.slf4j.LoggerFactory;
  * @date : 2020/5/18
  * @desc @Rule可以标注name和description属性，每个rule的name要唯一，如果没有指定，则RuleProxy则默认取类名@Rule可以标注name和description属性，每个rule的name要唯一，如果没有指定，则RuleProxy则默认取类名
  */
-@Rule
-public class AddRule {
-    private Logger logger = LoggerFactory.getLogger(AddRule.class);
+@Rule(priority = 1)
+public class AddRule1 {
+    private Logger logger = LoggerFactory.getLogger(AddRule1.class);
 
     private RuleDemoService ruleDemoService;
-
-    private QueryParam queryParam;
 
     /**
      * 判断是否命中规则
      * -@Condition是条件判断，要求返回boolean值，表示是否满足条件
      */
     @Condition
-    public boolean isAdd() {
+    public boolean isAdd(@Fact("number") QueryParam queryParam) {
         return "+".equals(queryParam.getParamSign());
     }
 
@@ -37,23 +32,9 @@ public class AddRule {
      */
     @Action
     public void doAction() {
-        Integer result = ruleDemoService.addParam(queryParam);
+//        Integer result = ruleDemoService.addParam(queryParam);
+        Integer result = 0;
         logger.info("加法规则, result = {}",result);
-    }
-
-
-    public void setParam(QueryParam queryParam, RuleDemoService ruleDemoService) {
-        this.queryParam = queryParam;
-        this.ruleDemoService = ruleDemoService;
-    }
-
-    /**
-     * 优先级 0/1/2/3.....  越小优先级越高
-     * -@Priority标注该rule的优先级，默认是Integer.MAX_VALUE - 1，值越小越优先
-     */
-    @Priority
-    public int getPriority() {
-        return 1;
     }
 }
 

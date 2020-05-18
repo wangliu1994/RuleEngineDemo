@@ -2,10 +2,7 @@ package com.example.easyruledemo.rule;
 
 import com.example.easyruledemo.entity.QueryParam;
 import com.example.easyruledemo.service.RuleDemoService;
-import org.jeasy.rules.annotation.Action;
-import org.jeasy.rules.annotation.Condition;
-import org.jeasy.rules.annotation.Priority;
-import org.jeasy.rules.annotation.Rule;
+import org.jeasy.rules.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,28 +12,21 @@ import org.slf4j.LoggerFactory;
  * @desc
  */
 @Rule
-public class DivRule {
-    private Logger logger = LoggerFactory.getLogger(DivRule.class);
+public class DivRule1 {
+    private Logger logger = LoggerFactory.getLogger(DivRule1.class);
 
     private RuleDemoService ruleDemoService;
 
-    private QueryParam queryParam;
-
-
     @Condition
-    public boolean isAdd() {
+    public boolean isAdd(@Fact("number") QueryParam queryParam) {
         return "/".equals(queryParam.getParamSign());
     }
 
     @Action
     public void doAction() {
-        Integer result = ruleDemoService.divParam(queryParam);
+//        Integer result = ruleDemoService.divParam(queryParam);
+        Integer result = 0;
         logger.info("除法规则, result = {}",result);
-    }
-
-    public void setParam(QueryParam queryParam, RuleDemoService ruleDemoService) {
-        this.queryParam = queryParam;
-        this.ruleDemoService = ruleDemoService;
     }
 
     @Priority

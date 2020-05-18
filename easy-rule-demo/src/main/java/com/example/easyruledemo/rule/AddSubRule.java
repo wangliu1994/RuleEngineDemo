@@ -1,7 +1,7 @@
 package com.example.easyruledemo.rule;
 
-import org.easyrules.annotation.Action;
-import org.easyrules.core.CompositeRule;
+import org.jeasy.rules.annotation.Action;
+import org.jeasy.rules.support.UnitRuleGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @date : 2020/5/18
  * @desc 这是一个组合规则，它由AddRule和SubRule组成
  */
-public class AddSubRule extends CompositeRule {
+public class AddSubRule extends UnitRuleGroup {
     private Logger logger = LoggerFactory.getLogger(AddSubRule.class);
 
     public AddSubRule(Object... rules) {

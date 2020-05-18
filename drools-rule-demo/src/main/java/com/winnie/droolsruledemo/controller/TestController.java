@@ -38,7 +38,6 @@ public class TestController {
         kieSession.insert(result);
 
         kieSession.fireAllRules();
-        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
