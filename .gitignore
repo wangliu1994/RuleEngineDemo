@@ -1,6 +1,2 @@
-target/
 .idea/
-.mvn/
-mvnw
-HELP.md
-mvnw.cmd
+DroolsDemo/.mvn/

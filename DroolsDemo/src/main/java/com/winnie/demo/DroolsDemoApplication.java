@@ -1,13 +1,13 @@
-package com.example.drooldemo;
+package com.winnie.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DrooldemoApplication {
+public class DroolsDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DrooldemoApplication.class, args);
+        SpringApplication.run(DroolsDemoApplication.class, args);
     }
 
 }

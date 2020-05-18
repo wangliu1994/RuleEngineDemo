@@ -1,4 +1,4 @@
-package com.example.drooldemo.config;
+package com.winnie.demo.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.KieBase;
@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 @Configuration
 @Slf4j
-public class RuleEngineConfig {
+public class DroolsRuleEngineConfig {
     private static final String RULES_PATH = "droolRule/";
     private final KieServices kieServices = KieServices.get();
 
