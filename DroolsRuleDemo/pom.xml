@@ -11,7 +11,7 @@
     <groupId>com.winnie</groupId>
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>DroolsDemo</name>
+    <name>DroolsRuleDemo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
