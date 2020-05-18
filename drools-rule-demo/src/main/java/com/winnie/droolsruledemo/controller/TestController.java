@@ -1,4 +1,4 @@
-package com.winnie.droolsruledemo;
+package com.winnie.droolsruledemo.controller;
 
 import com.winnie.droolsruledemo.entity.QueryParam;
 import com.winnie.droolsruledemo.service.RuleDemoService;
@@ -30,7 +30,7 @@ public class TestController {
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
-//        queryParam1.setParamSign("++");
+        queryParam1.setParamSign("++");
         Integer result = 0;
 
         kieSession.insert(queryParam1);
