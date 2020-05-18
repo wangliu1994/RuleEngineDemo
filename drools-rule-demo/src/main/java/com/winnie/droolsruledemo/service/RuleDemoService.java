@@ -1,6 +1,6 @@
-package com.winnie.demo.service;
+package com.winnie.droolsruledemo.service;
 
-import com.winnie.demo.entity.QueryParam;
+import com.winnie.droolsruledemo.entity.QueryParam;
 
 /**
  * @author : winnie [wangliu023@qq.com]

@@ -1,4 +1,4 @@
-package com.winnie.demo.entity;
+package com.winnie.droolsruledemo.entity;
 
 import lombok.Data;
 

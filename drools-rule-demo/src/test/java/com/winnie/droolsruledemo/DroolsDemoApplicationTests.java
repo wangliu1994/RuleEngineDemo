@@ -1,8 +1,8 @@
-package com.winnie.demo;
+package com.winnie.droolsruledemo;
 
-import com.winnie.demo.entity.QueryParam;
-import com.winnie.demo.entity.ResultParam;
-import com.winnie.demo.service.RuleDemoService;
+import com.winnie.droolsruledemo.entity.QueryParam;
+import com.winnie.droolsruledemo.entity.ResultParam;
+import com.winnie.droolsruledemo.service.RuleDemoService;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -19,10 +19,34 @@ class DroolsDemoApplicationTests {
     @Resource
     private RuleDemoService ruleEngineService;
 
-    private Logger logger = LoggerFactory.getLogger("DroolsDemoApplicationTests");
+    private Logger logger = LoggerFactory.getLogger(DroolsDemoApplicationTests.class);
 
     @Test
     void contextLoads() {
+    }
+
+
+    @Test
+    void testDrools() {
+        QueryParam queryParam1 = new QueryParam();
+        queryParam1.setParam1(10);
+        queryParam1.setParam2(5);
+        Integer result = 0;
+
+        kieSession.insert(queryParam1);
+        logger.info("queryParam1.result = {}", queryParam1.getResult());
+        kieSession.insert(result);
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+        //通过打印日志可以看到
+        //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
+        // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
+        // 规则使用的是原有对象的引用，规则通过对fact对象的读写，实现对应用数据的读写，对于其中的属性，需要提供getter setter访问器
+        logger.info("queryParam1.result = {}", queryParam1.getResult());
+
+        //通过打印日志可以看到， Integer result在规则中被赋了其他值，不是本身了，所以获取不到
+        logger.info("result = {}", result);
     }
 
 

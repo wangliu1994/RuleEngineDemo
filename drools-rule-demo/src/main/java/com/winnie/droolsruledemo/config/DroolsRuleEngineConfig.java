@@ -1,4 +1,4 @@
-package com.winnie.demo.config;
+package com.winnie.droolsruledemo.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.KieBase;
