@@ -15,17 +15,14 @@ import org.slf4j.LoggerFactory;
 public class DivRule1 {
     private Logger logger = LoggerFactory.getLogger(DivRule1.class);
 
-    private RuleDemoService ruleDemoService;
-
     @Condition
     public boolean isAdd(@Fact("number") QueryParam queryParam) {
         return "/".equals(queryParam.getParamSign());
     }
 
     @Action
-    public void doAction() {
-//        Integer result = ruleDemoService.divParam(queryParam);
-        Integer result = 0;
+    public void doAction(@Fact("number") QueryParam queryParam, @Fact("service") RuleDemoService ruleDemoService) {
+        Integer result = ruleDemoService.divParam(queryParam);
         logger.info("除法规则, result = {}",result);
     }
 

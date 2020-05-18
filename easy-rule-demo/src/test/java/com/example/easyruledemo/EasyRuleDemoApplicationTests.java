@@ -9,12 +9,15 @@ import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.RulesEngineParameters;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
 @SpringBootTest
 class EasyRuleDemoApplicationTests {
+    private Logger logger = LoggerFactory.getLogger(EasyRuleDemoApplicationTests.class);
 
     @Resource
     private RuleDemoService ruleDemoService;
@@ -67,6 +70,7 @@ class EasyRuleDemoApplicationTests {
         queryParam1.setParamSign("+");
         Facts facts = new Facts();
         facts.put("number", queryParam1);
+        facts.put("service", ruleDemoService);
 
         Rules rules = new Rules();
         AddRule1 addRule = new AddRule1();
@@ -112,7 +116,40 @@ class EasyRuleDemoApplicationTests {
 //
 //        rulesEngine.fireRules();
 //    }
-//
+
+    @Test
+    void testSubRule(){
+        RulesEngineParameters parameters = new RulesEngineParameters()
+                // 如果第一个规则满足条件，后面的规则将不再执行
+                .skipOnFirstAppliedRule(true);
+        RulesEngine rulesEngine = new DefaultRulesEngine(parameters);
+
+        QueryParam queryParam1 = new QueryParam();
+        queryParam1.setParam1(10);
+        queryParam1.setParam2(5);
+        queryParam1.setParamSign("-");
+        Facts facts = new Facts();
+        facts.put("number", queryParam1);
+        facts.put("service", ruleDemoService);
+
+        Rules rules = new Rules();
+        AddRule1 addRule = new AddRule1();
+        SubRule1 subRule = new SubRule1();
+        AddSubRule addSubRule = new AddSubRule(subRule, addRule);
+        MulRule1 mulRule = new MulRule1();
+        DivRule1 divRule = new DivRule1();
+
+        rules.register(addRule);
+        rules.register(subRule);
+        rules.register(addSubRule);
+        rules.register(mulRule);
+        rules.register(divRule);
+        rulesEngine.fire(rules, facts);
+
+//        Integer result = facts.get("result");
+//        logger.info("计算结果 result = {}",result);
+    }
+
 //    @Test
 //    void testMulRule(){
 //        RulesEngine rulesEngine = RulesEngineBuilder.aNewRulesEngine()

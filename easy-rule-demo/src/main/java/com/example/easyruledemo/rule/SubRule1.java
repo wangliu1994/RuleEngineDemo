@@ -15,17 +15,14 @@ import org.slf4j.LoggerFactory;
 public class SubRule1 {
     private Logger logger = LoggerFactory.getLogger(SubRule1.class);
 
-    private RuleDemoService ruleDemoService;
-
     @Condition
     public boolean isAdd(@Fact("number") QueryParam queryParam) {
         return "-".equals(queryParam.getParamSign());
     }
 
     @Action
-    public void doAction() {
-//        Integer result = ruleDemoService.subParam(queryParam);
-        Integer result = 0;
+    public void doAction(@Fact("number") QueryParam queryParam, @Fact("service") RuleDemoService ruleDemoService) {
+        Integer result = ruleDemoService.subParam(queryParam);
         logger.info("减法规则, result = {}",result);
     }
 

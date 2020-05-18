@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 public class AddRule1 {
     private Logger logger = LoggerFactory.getLogger(AddRule1.class);
 
-    private RuleDemoService ruleDemoService;
-
     /**
      * 判断是否命中规则
      * -@Condition是条件判断，要求返回boolean值，表示是否满足条件
@@ -31,9 +29,8 @@ public class AddRule1 {
      * -@Action标注条件成立之后触发的方法
      */
     @Action
-    public void doAction() {
-//        Integer result = ruleDemoService.addParam(queryParam);
-        Integer result = 0;
+    public void doAction(@Fact("number") QueryParam queryParam, @Fact("service") RuleDemoService ruleDemoService) {
+        Integer result = ruleDemoService.addParam(queryParam);
         logger.info("加法规则, result = {}",result);
     }
 }
