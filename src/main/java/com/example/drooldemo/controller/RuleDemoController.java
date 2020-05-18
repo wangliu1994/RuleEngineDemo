@@ -3,6 +3,7 @@ package com.example.drooldemo.controller;
 import com.example.drooldemo.entity.QueryParam;
 import com.example.drooldemo.entity.ResultParam;
 import com.example.drooldemo.service.RuleDemoService;
+import lombok.extern.slf4j.Slf4j;
 import org.kie.api.runtime.KieSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
  * @desc
  */
 @RestController
+@Slf4j
 public class RuleDemoController {
     @Resource
     private KieSession kieSession;
@@ -49,7 +51,7 @@ public class RuleDemoController {
         ResultParam resultParam = new ResultParam();
 
         kieSession.insert(queryParam1);
-        System.out.println(queryParam1.getResult());
+        log.debug("queryParam1.result = " + queryParam1.getResult());
         kieSession.insert(queryParam2);
         kieSession.insert(queryParam3);
         kieSession.insert(queryParam4);
@@ -65,12 +67,12 @@ public class RuleDemoController {
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
         // 规则使用的是原有对象的引用，规则通过对fact对象的读写，实现对应用数据的读写，对于其中的属性，需要提供getter setter访问器
-        System.out.println("queryParam1.result = " + queryParam1.getResult());
-        System.out.println("queryParam2.result = " + queryParam2.getResult());
-        System.out.println("queryParam3.result = " + resultParam.getResult());
-        System.out.println("queryParam4.result = " + resultParam.getResult());
+        log.debug("queryParam1.result = " + queryParam1.getResult());
+        log.debug("queryParam2.result = " + queryParam2.getResult());
+        log.debug("queryParam3.result = " + resultParam.getResult());
+        log.debug("queryParam4.result = " + resultParam.getResult());
 
         //通过打印日志可以看到， Integer result在规则中被赋了其他值，不是本身了，所以获取不到
-        System.out.println(result);
+        log.debug("result = " + result);
     }
 }
