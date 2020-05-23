@@ -1,0 +1,6 @@
+name: "sub rule"
+description: "减法规则引擎"
+priority: 2
+condition: "\"-\".equals(number.getParamSign())"
+actions:
+  - "System.out.println(\"减法规则, result = \" +  service.subParam(number));"

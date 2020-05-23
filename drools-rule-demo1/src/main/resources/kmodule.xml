@@ -1,0 +1,43 @@
+<kmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.drools.org/xsd/kmodule">
+    <configuration>
+        <property key="drools.evaluator.supersetOf" value="org.mycompany.SupersetOfEvaluatorDefinition"/>
+    </configuration>
+    <!--kbase属性-->
+    <!--name: 从KieContainer检索此KieBase的名称。这是唯一的必需属性。-->
+    <!--includes: 以逗号分隔的列表包含在此kmodule中的其他KieBase。所有这些KieBases的工件也将包括在这一部分中。-->
+    <!--packages: 默认情况下，任何级别的资源文件夹下的所有Drools工件都包含在KieBase中。此属性允许将将在此KieBase中编译的工件限制为仅属于软件包列表的工件。-->
+    <!--declarativeAgenda: 定义是否启用声明性议程。-->
+    <!--eventProcessingMode: 在云模式下编译时，KieBase将事件视为正常事实，而在流模式下，则允许对事件进行时间推理。-->
+    <!--equalsBehavior: 定义将新事实插入工作记忆时的Drools行为。有了身份，它总是创建一个新的FactHandle，除非工作存储器中尚未存在相同的对象，而只有当新插入的对象与现有事实不相等（根据其相等方法）时，才具有相等性。-->
+    <kbase name="KBase1" default="true" eventProcessingMode="cloud" equalsBehavior="equality"
+           declarativeAgenda="enabled" packages="droolRule1">
+        <ksession name="KSession2_1" type="stateful" default="true"/>
+        <ksession name="KSession2_2" type="stateless" default="false" beliefSystem="jtms"/>
+    </kbase>
+    <kbase name="KBase2" default="false" eventProcessingMode="stream" equalsBehavior="equality"
+           declarativeAgenda="enabled" packages="droolRule2" includes="KBase1">
+
+        <!-- ksession属性-->
+        <!--name：此KieSession的唯一名称。用于从KieContainer中获取KieSession。这是唯一的必需属性。-->
+        <!--type：有状态会话允许迭代地使用工作内存，而无状态会话是使用提供的数据集一次性执行工作内存。-->
+        <!--default：定义此KieSession是否是该模块的默认值，因此可以从KieContainer创建它而无需传递任何名称。在每个模块中，每种类型最多可以有一个默认的KieSession。-->
+        <!--clockType：定义事件时间戳是由系统时钟还是由应用程序控制的伪时钟确定的。该时钟对于单元测试时间规则特别有用。-->
+        <!--beliefSystem：	定义KieSession使用的beliefSystem的类型。-->
+        <ksession name="KSession3_1" type="stateful" default="false" clockType="realtime">
+            <fileLogger file="drools.log" threaded="true" interval="10"/>
+            <workItemHandlers>
+                <workItemHandler name="name" type="org.domain.WorkItemHandler"/>
+            </workItemHandlers>
+            <!--<calendars>-->
+                <!--<calendar name="monday" type="org.domain.Monday"/>-->
+            <!--</calendars>-->
+            <listeners>
+                <ruleRuntimeEventListener type="org.domain.RuleRuntimeListener"/>
+                <agendaEventListener type="org.domain.FirstAgendaListener"/>
+                <agendaEventListener type="org.domain.SecondAgendaListener"/>
+                <processEventListener type="org.domain.ProcessListener"/>
+            </listeners>
+        </ksession>
+    </kbase>
+</kmodule>

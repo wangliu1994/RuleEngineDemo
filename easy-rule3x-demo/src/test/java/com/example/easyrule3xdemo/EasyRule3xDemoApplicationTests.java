@@ -10,12 +10,15 @@ import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.RulesEngineParameters;
 import org.jeasy.rules.mvel.MVELRule;
+import org.jeasy.rules.mvel.MVELRuleFactory;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 @SpringBootTest
 class EasyRule3xDemoApplicationTests {
@@ -31,7 +34,7 @@ class EasyRule3xDemoApplicationTests {
     }
 
     @Test
-    void testAddRule(){
+    void testAddRule() {
         RulesEngineParameters parameters = new RulesEngineParameters()
                 // 如果第一个规则满足条件，后面的规则将不再执行
                 .skipOnFirstAppliedRule(true);
@@ -46,11 +49,11 @@ class EasyRule3xDemoApplicationTests {
         facts.put("service", ruleDemoService);
 
         Rules rules = new Rules();
-        AddRule1 addRule = new AddRule1();
-        SubRule1 subRule = new SubRule1();
+        AddRule addRule = new AddRule();
+        SubRule subRule = new SubRule();
         AddSubRule addSubRule = new AddSubRule(subRule, addRule);
-        MulRule1 mulRule = new MulRule1();
-        DivRule1 divRule = new DivRule1();
+        MulRule mulRule = new MulRule();
+        DivRule divRule = new DivRule();
 
         rules.register(addRule);
         rules.register(subRule);
@@ -58,10 +61,11 @@ class EasyRule3xDemoApplicationTests {
         rules.register(mulRule);
         rules.register(divRule);
         rulesEngine.fire(rules, facts);
+        logger.info("result = {}",queryParam1.getResult());
     }
 
     @Test
-    void testSubRule(){
+    void testSubRule() {
         RulesEngineParameters parameters = new RulesEngineParameters()
                 // 如果第一个规则满足条件，后面的规则将不再执行
                 .skipOnFirstAppliedRule(true);
@@ -76,11 +80,11 @@ class EasyRule3xDemoApplicationTests {
         facts.put("service", ruleDemoService);
 
         Rules rules = new Rules();
-        AddRule1 addRule = new AddRule1();
-        SubRule1 subRule = new SubRule1();
+        AddRule addRule = new AddRule();
+        SubRule subRule = new SubRule();
         AddSubRule addSubRule = new AddSubRule(subRule, addRule);
-        MulRule1 mulRule = new MulRule1();
-        DivRule1 divRule = new DivRule1();
+        MulRule mulRule = new MulRule();
+        DivRule divRule = new DivRule();
 
         rules.register(addRule);
         rules.register(subRule);
@@ -91,7 +95,7 @@ class EasyRule3xDemoApplicationTests {
     }
 
     @Test
-    void testMulRule(){
+    void testMulRule() {
         RulesEngineParameters parameters = new RulesEngineParameters()
                 // 如果第一个规则满足条件，后面的规则将不再执行
                 .skipOnFirstAppliedRule(true);
@@ -106,11 +110,11 @@ class EasyRule3xDemoApplicationTests {
         facts.put("service", ruleDemoService);
 
         Rules rules = new Rules();
-        AddRule1 addRule = new AddRule1();
-        SubRule1 subRule = new SubRule1();
+        AddRule addRule = new AddRule();
+        SubRule subRule = new SubRule();
         AddSubRule addSubRule = new AddSubRule(subRule, addRule);
-        MulRule1 mulRule = new MulRule1();
-        DivRule1 divRule = new DivRule1();
+        MulRule mulRule = new MulRule();
+        DivRule divRule = new DivRule();
 
         rules.register(addRule);
         rules.register(subRule);
@@ -121,7 +125,7 @@ class EasyRule3xDemoApplicationTests {
     }
 
     @Test
-    void testDivRule(){
+    void testDivRule() {
         RulesEngineParameters parameters = new RulesEngineParameters()
                 // 如果第一个规则满足条件，后面的规则将不再执行
                 .skipOnFirstAppliedRule(true);
@@ -136,11 +140,11 @@ class EasyRule3xDemoApplicationTests {
         facts.put("service", ruleDemoService);
 
         Rules rules = new Rules();
-        AddRule1 addRule = new AddRule1();
-        SubRule1 subRule = new SubRule1();
+        AddRule addRule = new AddRule();
+        SubRule subRule = new SubRule();
         AddSubRule addSubRule = new AddSubRule(subRule, addRule);
-        MulRule1 mulRule = new MulRule1();
-        DivRule1 divRule = new DivRule1();
+        MulRule mulRule = new MulRule();
+        DivRule divRule = new DivRule();
 
         rules.register(addRule);
         rules.register(subRule);
@@ -154,23 +158,43 @@ class EasyRule3xDemoApplicationTests {
      * 基于MVEL表达式的编程模型
      */
     @Test
-    void testMVELRule(){
+    void testMVELAddRule() {
         Rule addRule = new MVELRule()
-        .name("add rule")
-        .description("加法规则引擎")
-        .priority(1)
-        .when("\"+\".equals(number.getParamSign()")
-        .when("number.result = 0");
+                .name("add rule")
+                .description("加法规则引擎")
+                .priority(1)
+                .when("\"+\".equals(number.getParamSign())")
+//        .then("logger.info(\"加法规则, result = {}\",service.addParam(number));");
+                .then("System.out.println(\"加法规则, result = \" +  service.addParam(number))");
 
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
-        queryParam1.setParamSign("*");
+        queryParam1.setParamSign("+");
         Facts facts = new Facts();
         facts.put("number", queryParam1);
+        facts.put("service", ruleDemoService);
 
         Rules rules = new Rules();
         rules.register(addRule);
+        RulesEngine rulesEngine = new DefaultRulesEngine();
+        rulesEngine.fire(rules, facts);
+    }
+
+    @Test
+    void testMVELSubRule() throws FileNotFoundException {
+        Rule subRule = MVELRuleFactory.createRuleFrom(new FileReader("sub-rule.yml"));
+
+        QueryParam queryParam1 = new QueryParam();
+        queryParam1.setParam1(10);
+        queryParam1.setParam2(5);
+        queryParam1.setParamSign("-");
+        Facts facts = new Facts();
+        facts.put("number", queryParam1);
+        facts.put("service", ruleDemoService);
+
+        Rules rules = new Rules();
+        rules.register(subRule);
         RulesEngine rulesEngine = new DefaultRulesEngine();
         rulesEngine.fire(rules, facts);
     }
