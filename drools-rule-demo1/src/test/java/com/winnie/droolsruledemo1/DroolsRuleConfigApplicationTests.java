@@ -124,7 +124,7 @@ class DroolsRuleConfigApplicationTests {
 
         QueryParam resultParam = (QueryParam) results.getValue("queryParam");
         Integer resultData = (Integer) results.getValue("resultParam");
-        logger.info("queryParam1.result = {}", resultParam.getResult());
+        logger.info("resultParam.result = {}", resultParam.getResult());
         logger.info("queryParam1.result = {}", queryParam1.getResult());
         logger.info("result = {}", resultData);
     }
