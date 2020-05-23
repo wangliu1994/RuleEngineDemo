@@ -1,10 +1,10 @@
 package droolsRule2;
-import com.winnie.droolsruleconfig.entity.QueryParam
-import com.winnie.droolsruleconfig.entity.ResultParam
+import com.winnie.droolsruledemo2.entity.QueryParam
+import com.winnie.droolsruledemo2.entity.ResultParam
 import org.slf4j.LoggerFactory
 import org.slf4j.Logger
-import com.winnie.droolsruleconfig.service.RuleDemoService
-import com.winnie.droolsruleconfig.service.RuleDemoServiceImpl ;
+import com.winnie.droolsruledemo2.service.RuleDemoService
+import com.winnie.droolsruledemo2.service.RuleDemoServiceImpl ;
 
 
 dialect "java"

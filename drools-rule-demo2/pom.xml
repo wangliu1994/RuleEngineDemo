@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.winnie</groupId>
-    <artifactId>drools-rule-config</artifactId>
+    <artifactId>drools-rule-demo2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>drools-rule-demo1</name>
-    <!--本例使用kmodule.xml的方式配置drools-->
+    <name>drools-rule-demo2</name>
+    <!--本例以编程方式定义KieModule-->
     <description>Demo project for Spring Boot</description>
 
     <properties>
