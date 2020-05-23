@@ -1,13 +1,16 @@
-package com.winnie.droolsruledemo2;
+package com.winnie.droolsruledemo1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author winnie
+ */
 @SpringBootApplication
-public class DroolsRuleDemo2Application {
+public class DroolsRuleDemo1Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(DroolsRuleDemo2Application.class, args);
+        SpringApplication.run(DroolsRuleDemo1Application.class, args);
     }
 
 }

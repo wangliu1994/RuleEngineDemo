@@ -1,7 +1,7 @@
-package com.winnie.droolsruledemo2;
+package com.winnie.droolsruledemo1;
 
-import com.winnie.droolsruledemo2.entity.QueryParam;
-import com.winnie.droolsruledemo2.service.RuleDemoService;
+import com.winnie.droolsruledemo1.entity.QueryParam;
+import com.winnie.droolsruledemo1.service.RuleDemoService;
 import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;

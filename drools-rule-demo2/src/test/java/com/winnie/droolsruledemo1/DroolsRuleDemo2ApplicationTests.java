@@ -1,4 +1,4 @@
-package com.winnie.droolsruledemo2;
+package com.winnie.droolsruledemo1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

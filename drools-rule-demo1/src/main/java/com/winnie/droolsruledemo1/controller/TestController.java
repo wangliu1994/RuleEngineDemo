@@ -1,7 +1,7 @@
-package com.winnie.droolsruledemo2.controller;
+package com.winnie.droolsruledemo1.controller;
 
-import com.winnie.droolsruledemo2.entity.QueryParam;
-import com.winnie.droolsruledemo2.service.RuleDemoService;
+import com.winnie.droolsruledemo1.entity.QueryParam;
+import com.winnie.droolsruledemo1.service.RuleDemoService;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
