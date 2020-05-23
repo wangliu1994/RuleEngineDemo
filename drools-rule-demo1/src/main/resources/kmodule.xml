@@ -11,7 +11,7 @@
     <!--eventProcessingMode: 在云模式下编译时，KieBase将事件视为正常事实，而在流模式下，则允许对事件进行时间推理。-->
     <!--equalsBehavior: 定义将新事实插入工作记忆时的Drools行为。有了身份，它总是创建一个新的FactHandle，除非工作存储器中尚未存在相同的对象，而只有当新插入的对象与现有事实不相等（根据其相等方法）时，才具有相等性。-->
     <kbase name="KBase1" default="true" eventProcessingMode="cloud" equalsBehavior="equality"
-           declarativeAgenda="enabled" packages="droolRule1">
+           declarativeAgenda="enabled" packages="droolsRule">
         <ksession name="KSession2_1" type="stateful" default="true"/>
         <ksession name="KSession2_2" type="stateless" default="false" beliefSystem="jtms"/>
     </kbase>

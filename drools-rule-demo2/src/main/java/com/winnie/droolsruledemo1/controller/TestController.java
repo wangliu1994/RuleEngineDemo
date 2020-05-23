@@ -29,7 +29,7 @@ public class TestController {
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
-        queryParam1.setParamSign("++");
+        queryParam1.setParamSign("+");
         Integer result = 0;
 
         KieServices kieServices = KieServices.get();

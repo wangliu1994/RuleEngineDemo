@@ -1,14 +1,20 @@
 <kmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.drools.org/xsd/kmodule">
     <kbase name="KBase1" default="true" eventProcessingMode="cloud" equalsBehavior="equality"
-           declarativeAgenda="enabled" packages="droolsRule1">
-        <ksession name="KSession2_1" type="stateful" default="true"/>
-        <ksession name="KSession2_2" type="stateless" default="false" beliefSystem="jtms"/>
+           declarativeAgenda="enabled" packages="droolsRule">
+        <ksession name="KSession1_1" type="stateful" default="true"/>
+        <ksession name="KSession1_2" type="stateless" default="false" beliefSystem="jtms"/>
     </kbase>
     <kbase name="KBase2" default="false" eventProcessingMode="stream" equalsBehavior="equality"
            declarativeAgenda="enabled" packages="droolsRule2" includes="KBase1">
 
-        <ksession name="KSession3_1" type="stateful" default="false" clockType="realtime">
+        <ksession name="KSession2_1" type="stateful" default="false" clockType="realtime">
             <fileLogger file="drools.log" threaded="true" interval="10"/>
         </ksession>
+    </kbase>
+
+    <kbase name="KBase3" default="false" eventProcessingMode="stream" equalsBehavior="equality"
+           declarativeAgenda="enabled" packages="droolsRule3">
+        <ksession name="KSession3_1" type="stateful" default="false"/>
+        <ksession name="KSession3_2" type="stateless" default="false" beliefSystem="jtms"/>
     </kbase>
 </kmodule>
