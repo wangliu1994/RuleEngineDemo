@@ -1,14 +1,14 @@
-package droolsRule3;
+package droolsRule3
 import com.winnie.droolsruledemo1.entity.QueryParam
 import com.winnie.droolsruledemo1.entity.ResultParam
 import org.slf4j.LoggerFactory
 import org.slf4j.Logger
 import com.winnie.droolsruledemo1.service.RuleDemoService
-import com.winnie.droolsruledemo1.service.RuleDemoServiceImpl ;
+import com.winnie.droolsruledemo1.service.RuleDemoServiceImpl
 
 //全局变量
-global RuleDemoService ruleDemoService;
-global Integer resultParam;
+global RuleDemoService ruleDemoService
+global Integer resultParam
 
 dialect "java"
 rule "rule31"

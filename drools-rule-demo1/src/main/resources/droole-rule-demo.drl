@@ -1,0 +1,23 @@
+package droolsRuleDemo;
+
+import org.slf4j.Logger
+
+//function
+
+//query
+
+//declare
+
+//global
+//全局变量
+global Integer resultParam;
+
+
+dialect "java"
+rule "ruleDemo"
+   salience 15
+   agenda-group "applicationGroup"
+   when
+   then
+end
+
