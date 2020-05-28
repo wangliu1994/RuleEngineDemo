@@ -3,6 +3,8 @@ package com.winnie.droolsruledemo1.controller;
 import com.winnie.droolsruledemo1.entity.QueryParam;
 import com.winnie.droolsruledemo1.service.RuleDemoService;
 import org.kie.api.KieServices;
+import org.kie.api.builder.KieScanner;
+import org.kie.api.builder.ReleaseId;
 import org.kie.api.command.Command;
 import org.kie.api.runtime.ExecutionResults;
 import org.kie.api.runtime.KieContainer;
@@ -59,8 +61,13 @@ public class TestController {
         queryParam1.setParamSign("++");
         Integer result = 0;
 
-        KieServices kieServices = KieServices.get();
-        KieContainer kieContainer = kieServices.getKieClasspathContainer();
+        KieServices kieServices = KieServices.Factory.get();
+//        KieContainer kieContainer = kieServices.getKieClasspathContainer();
+        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-config", "0.0.2-SNAPSHOT" );
+        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
+
+//        KieScanner kScanner = kieServices.newKieScanner(kieContainer);
+//        kScanner.start( 1000L );
         StatelessKieSession kieSession = kieContainer.newStatelessKieSession("KSession1_2");
 
         List<Command> cmds = new ArrayList<>();

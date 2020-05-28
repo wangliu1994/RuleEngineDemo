@@ -12,6 +12,7 @@
     <artifactId>drools-rule-config</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>drools-rule-demo1</name>
+    <packaging>kjar</packaging>
     <!--本例使用kmodule.xml的方式配置drools-->
     <description>Demo project for Spring Boot</description>
 
@@ -55,6 +56,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-ci</artifactId>
+            <version>7.6.0.Final</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -72,6 +79,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-maven-plugin</artifactId>
+                <version>7.37.0.Final</version>
             </plugin>
         </plugins>
     </build>

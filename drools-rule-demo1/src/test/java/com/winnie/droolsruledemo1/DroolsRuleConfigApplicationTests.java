@@ -6,12 +6,21 @@ import com.winnie.droolsruledemo1.service.RuleDemoService;
 import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.KieRepository;
+import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
+import org.kie.api.builder.model.KieBaseModel;
+import org.kie.api.builder.model.KieModuleModel;
+import org.kie.api.builder.model.KieSessionModel;
 import org.kie.api.command.Command;
+import org.kie.api.conf.EqualityBehaviorOption;
 import org.kie.api.runtime.ExecutionResults;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.StatelessKieSession;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
 import org.kie.internal.command.CommandFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +108,14 @@ class DroolsRuleConfigApplicationTests {
 
         logger.info("queryParam1.result = {}", queryParam1.getResult());
         logger.info("result = {}", result);
+
+
+        QueryResults resultsRows = kieSession.getQueryResults("num in add");
+        logger.info("queryResult.size: " + resultsRows.size());
+        for ( QueryResultsRow row : resultsRows ) {
+            QueryParam queryParam = ( QueryParam ) row.get( "queryParam" );
+            logger.info("queryParam: " + queryParam.toString());
+        }
     }
 
     @Test
@@ -127,5 +144,36 @@ class DroolsRuleConfigApplicationTests {
         logger.info("resultParam.result = {}", resultParam.getResult());
         logger.info("queryParam1.result = {}", queryParam1.getResult());
         logger.info("result = {}", resultData);
+    }
+
+    @Test
+    void testDroolsFile(){
+        KieServices kieServices = KieServices.Factory.get();
+        KieRepository kr = kieServices.getRepository();
+
+        KieModuleModel kieModuleModel = kieServices.newKieModuleModel();
+
+        KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel( "KBase1")
+                .setDefault( true )
+                .setEqualsBehavior( EqualityBehaviorOption.EQUALITY );
+
+        KieSessionModel ksessionModel1 = kieBaseModel1.newKieSessionModel( "KSession1" )
+                .setDefault( true )
+                .setType( KieSessionModel.KieSessionType.STATEFUL );
+
+        KieBaseModel kieBaseModel2 = kieModuleModel.newKieBaseModel( "KBase12")
+                .setDefault( true )
+                .setEqualsBehavior( EqualityBehaviorOption.EQUALITY );
+        KieSessionModel ksessionModel2 = kieBaseModel2.newKieSessionModel( "KSession12" )
+                .setDefault( true )
+                .setType( KieSessionModel.KieSessionType.STATEFUL );
+
+        KieFileSystem kfs = kieServices.newKieFileSystem();
+        kfs.writeKModuleXML(kieModuleModel.toXML());
+
+
+        kieServices.newKieBuilder(kfs).buildAll();
+        KieContainer kieContainer = kieServices.newKieContainer(kr.getDefaultReleaseId());
+
     }
 }
