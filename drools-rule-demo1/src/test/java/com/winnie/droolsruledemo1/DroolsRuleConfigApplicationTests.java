@@ -1,14 +1,12 @@
 package com.winnie.droolsruledemo1;
 
 import com.winnie.droolsruledemo1.entity.QueryParam;
-import com.winnie.droolsruledemo1.entity.ResultParam;
 import com.winnie.droolsruledemo1.service.RuleDemoService;
 import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.KieRepository;
-import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.builder.model.KieBaseModel;
 import org.kie.api.builder.model.KieModuleModel;
@@ -31,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
+@SuppressWarnings("unused")
 class DroolsRuleConfigApplicationTests {
     @Resource
     private RuleDemoService ruleEngineService;
@@ -174,6 +173,5 @@ class DroolsRuleConfigApplicationTests {
 
         kieServices.newKieBuilder(kfs).buildAll();
         KieContainer kieContainer = kieServices.newKieContainer(kr.getDefaultReleaseId());
-
     }
 }

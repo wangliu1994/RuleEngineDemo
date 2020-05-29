@@ -2,6 +2,7 @@ package com.winnie.droolsruledemo1.controller;
 
 import com.winnie.droolsruledemo1.entity.QueryParam;
 import com.winnie.droolsruledemo1.service.RuleDemoService;
+import io.swagger.annotations.ApiOperation;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
@@ -14,6 +15,8 @@ import org.kie.internal.command.CommandFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -32,52 +35,50 @@ public class TestController {
 
     private Logger logger = LoggerFactory.getLogger(TestController.class);
 
-    @GetMapping("test")
-    public void test() {
-        QueryParam queryParam1 = new QueryParam();
-        queryParam1.setParam1(10);
-        queryParam1.setParam2(5);
-        queryParam1.setParamSign("++");
+    @PostMapping("/testRule")
+    @ApiOperation("有状态的kieSession")
+    public Integer testRule(@RequestBody QueryParam queryParam) {
         Integer result = 0;
 
         KieServices kieServices = KieServices.get();
         KieContainer kieContainer = kieServices.getKieClasspathContainer();
         KieSession kieSession = kieContainer.newKieSession();
 
-        kieSession.insert(queryParam1);
-        logger.info("queryParam1.result = {}", queryParam1.getResult());
+        kieSession.insert(queryParam);
+        logger.info("queryParam.result = {}", queryParam.getResult());
         kieSession.insert(result);
 
         kieSession.fireAllRules();
-        logger.info("queryParam1.result = {}", queryParam1.getResult());
+        logger.info("queryParam.result = {}", queryParam.getResult());
         kieSession.dispose();
+
+        return queryParam.getResult();
     }
 
-    @GetMapping("testStateless")
-    public void testStateless() {
-        QueryParam queryParam1 = new QueryParam();
-        queryParam1.setParam1(10);
-        queryParam1.setParam2(5);
-        queryParam1.setParamSign("++");
+    @PostMapping("/testStateless")
+    @ApiOperation("无状态的kieSession")
+    public Integer testStateless(@RequestBody QueryParam queryParam) {
         Integer result = 0;
 
         KieServices kieServices = KieServices.Factory.get();
 //        KieContainer kieContainer = kieServices.getKieClasspathContainer();
-        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-config", "0.0.2-SNAPSHOT" );
+        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-config", "0.0.1-SNAPSHOT" );
         KieContainer kieContainer = kieServices.newKieContainer( releaseId );
 
-//        KieScanner kScanner = kieServices.newKieScanner(kieContainer);
-//        kScanner.start( 1000L );
+        KieScanner kScanner = kieServices.newKieScanner(kieContainer);
+        kScanner.start( 1000L );
         StatelessKieSession kieSession = kieContainer.newStatelessKieSession("KSession1_2");
 
         List<Command> cmds = new ArrayList<>();
-        cmds.add(CommandFactory.newInsert(queryParam1,"queryParam"));
+        cmds.add(CommandFactory.newInsert(queryParam,"queryParam"));
         cmds.add(CommandFactory.newInsert(result, "resultParam"));
         cmds.add(CommandFactory.newInsert(ruleEngineService, "ruleDemoService"));
 
-        logger.info("queryParam1.result = {}", queryParam1.getResult());
+        logger.info("queryParam1.result = {}", queryParam.getResult());
         ExecutionResults results = kieSession.execute(CommandFactory.newBatchExecution(cmds));
         QueryParam resultParam = (QueryParam) results.getValue("queryParam");
         logger.info("queryParam1.result = {}", resultParam.getResult());
+
+        return queryParam.getResult();
     }
 }
