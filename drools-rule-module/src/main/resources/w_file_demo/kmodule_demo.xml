@@ -6,7 +6,7 @@
     <!--kbase属性-->
     <!--name: 从KieContainer检索此KieBase的名称。这是唯一的必需属性。-->
     <!--includes: 以逗号分隔的列表包含在此kmodule中的其他KieBase。所有这些KieBases的工件也将包括在这一部分中。-->
-    <!--packages: 默认情况下，任何级别的资源文件夹下的所有Drools工件都包含在KieBase中。此属性允许将将在此KieBase中编译的工件限制为仅属于软件包列表的工件。-->
+    <!--packages: 默认情况下，任何级别的资源文件夹下的所有Drools工件都包含在KieBase中。此属性允许将将在此KieBase中编译的工件限制为仅属于资源文件夹列表的工件。-->
     <!--declarativeAgenda: 定义是否启用声明性议程。-->
     <!--eventProcessingMode: 在云模式下编译时，KieBase将事件视为正常事实，而在流模式下，则允许对事件进行时间推理。-->
     <!--equalsBehavior: 定义将新事实插入工作记忆时的Drools行为。有了身份，它总是创建一个新的FactHandle，除非工作存储器中尚未存在相同的对象，而只有当新插入的对象与现有事实不相等（根据其相等方法）时，才具有相等性。-->

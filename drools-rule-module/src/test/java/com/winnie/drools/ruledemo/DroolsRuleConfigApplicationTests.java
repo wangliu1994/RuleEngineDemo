@@ -18,6 +18,7 @@ import org.kie.api.runtime.ExecutionResults;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.StatelessKieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 import org.kie.internal.command.CommandFactory;
@@ -58,6 +59,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.insert(result);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
@@ -86,6 +88,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.insert(ruleEngineService);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
@@ -114,6 +117,7 @@ class DroolsRuleConfigApplicationTests {
 
         logger.info("queryParam1.result = {}", queryParam1.getResult());
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
@@ -138,6 +142,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.insert(queryParam2);
         kieSession.insert(ruleEngineService);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
         logger.info("queryParam2.result = {}", queryParam2.getResult());
     }
@@ -158,6 +163,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.setGlobal("resultParam", result);
         kieSession.insert(queryParam2);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
         logger.info("queryParam2.result = {}", queryParam2.getResult());
     }
@@ -179,6 +185,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.insert(resultParam);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam3.result = {}", resultParam.getResult());
     }
 
@@ -198,6 +205,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.setGlobal("resultParam", result);
         kieSession.insert(queryParam3);
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam3.result = {}", result);
     }
 
@@ -217,6 +225,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.insert(ruleEngineService);
         kieSession.insert(resultParam);
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam4.result = {}", resultParam.getResult());
     }
 
@@ -236,6 +245,7 @@ class DroolsRuleConfigApplicationTests {
         kieSession.setGlobal("resultParam", result);
         kieSession.insert(queryParam4);
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam4.result = {}", result);
     }
 
@@ -367,5 +377,73 @@ class DroolsRuleConfigApplicationTests {
 
         kieServices.newKieBuilder(kfs).buildAll();
         KieContainer kieContainer = kieServices.newKieContainer(kr.getDefaultReleaseId());
+    }
+
+    @Test
+    void testAction1() {
+        KieServices kieServices = KieServices.Factory.get();
+        KieContainer kieContainer = kieServices.getKieClasspathContainer();
+        KieSession kieSession = kieContainer.newKieSession("KSession4_1");
+
+        QueryParam queryParam4 = new QueryParam();
+        queryParam4.setParam1(10);
+        queryParam4.setParam2(5);
+        queryParam4.setParamSign("+");
+        Integer result = 0;
+
+        kieSession.setGlobal("ruleDemoService", ruleEngineService);
+        kieSession.setGlobal("resultParam", result);
+        FactHandle handle = kieSession.insert(queryParam4);
+        kieSession.fireAllRules();
+        logger.info("queryParam4.result = {}", result);
+
+        queryParam4.setParamSign("-");
+        kieSession.update(handle, queryParam4);
+        kieSession.fireAllRules();
+        logger.info("queryParam4.result = {}", result);
+
+        kieSession.dispose();
+    }
+
+    @Test
+    void testAction2() {
+        KieServices kieServices = KieServices.Factory.get();
+        KieContainer kieContainer = kieServices.getKieClasspathContainer();
+        KieSession kieSession = kieContainer.newKieSession("KSession4_1");
+
+        QueryParam queryParam4 = new QueryParam();
+        queryParam4.setParam1(10);
+        queryParam4.setParam2(5);
+        queryParam4.setParamSign("*");
+        Integer result = 0;
+
+        kieSession.setGlobal("ruleDemoService", ruleEngineService);
+        kieSession.setGlobal("resultParam", result);
+        FactHandle handle = kieSession.insert(queryParam4);
+        kieSession.fireAllRules();
+        logger.info("queryParam4.result = {}", result);
+
+        kieSession.dispose();
+    }
+
+    @Test
+    void testAction3() {
+        KieServices kieServices = KieServices.Factory.get();
+        KieContainer kieContainer = kieServices.getKieClasspathContainer();
+        KieSession kieSession = kieContainer.newKieSession("KSession4_1");
+
+        QueryParam queryParam4 = new QueryParam();
+        queryParam4.setParam1(10);
+        queryParam4.setParam2(5);
+        queryParam4.setParamSign("/");
+        Integer result = 0;
+
+        kieSession.setGlobal("ruleDemoService", ruleEngineService);
+        kieSession.setGlobal("resultParam", result);
+        FactHandle handle = kieSession.insert(queryParam4);
+        kieSession.fireAllRules();
+        logger.info("queryParam4.result = {}", result);
+
+        kieSession.dispose();
     }
 }

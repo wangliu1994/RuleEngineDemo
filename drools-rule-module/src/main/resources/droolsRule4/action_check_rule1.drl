@@ -1,0 +1,34 @@
+//package其实并不重要，kmodule.xml里面的package实际上取的是文件夹名
+package droolsRule4
+import com.winnie.common.entity.QueryParam
+import com.winnie.common.entity.ResultParam
+import org.slf4j.LoggerFactory
+import org.slf4j.Logger
+import com.winnie.common.service.RuleDemoService
+
+//全局变量
+global RuleDemoService ruleDemoService
+global Integer resultParam
+
+
+dialect "java"
+rule "rule41"
+   salience 99
+   when $queryParam: QueryParam($paramSign: paramSign!= null && paramSign.equals("+"))
+   then
+          final Logger LOGGER = LoggerFactory.getLogger("加法 规则引擎4");
+          LOGGER.info("参数:param1="+$queryParam.getParam1()+ ", param2="+$queryParam.getParam2()+"; paramSign="+$queryParam.getParamSign());
+          resultParam = ruleDemoService.addParam($queryParam);
+          $queryParam.setResult(resultParam);
+end
+
+rule "rule42"
+    salience 98
+    when $queryParam: QueryParam(paramSign!= null && paramSign.equals("-"))
+    then
+         final Logger LOGGER = LoggerFactory.getLogger("减法 规则引擎4");
+         LOGGER.info("参数:param1="+$queryParam.getParam1()+ ", param2="+$queryParam.getParam2()+"; paramSign="+$queryParam.getParamSign());
+         $queryParam.setResult(ruleDemoService.subParam($queryParam));
+ end
+
+

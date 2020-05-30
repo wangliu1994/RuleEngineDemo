@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.winnie</groupId>
     <artifactId>drools-rule-module</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>drools-rule-module</name>
     <!--<packaging>kjar</packaging>-->
     <!--本例使用kmodule.xml的方式配置drools-->
@@ -67,11 +67,11 @@
             <version>7.6.0.Final</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-ci</artifactId>
-            <version>7.6.0.Final</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.kie</groupId>-->
+            <!--<artifactId>kie-ci</artifactId>-->
+            <!--<version>7.6.0.Final</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.winnie</groupId>

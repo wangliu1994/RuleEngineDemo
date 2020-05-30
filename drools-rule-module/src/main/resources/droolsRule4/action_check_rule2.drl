@@ -1,0 +1,45 @@
+package droolsRule4
+import com.winnie.common.entity.QueryParam
+import com.winnie.common.entity.ResultParam
+import org.slf4j.LoggerFactory
+import org.slf4j.Logger
+import com.winnie.common.service.RuleDemoService
+
+//全局变量
+global RuleDemoService ruleDemoService
+global Integer resultParam
+
+
+dialect "java"
+ rule "rule43"
+    salience 96
+    when $queryParam: QueryParam(paramSign!= null && paramSign.equals("*"))
+    then
+           final Logger LOGGER = LoggerFactory.getLogger("乘法 规则引擎4");
+           LOGGER.info("参数:param1="+$queryParam.getParam1()+ ", param2="+$queryParam.getParam2()+"; paramSign="+$queryParam.getParamSign());
+           resultParam = ruleDemoService.mulParam($queryParam);
+           $queryParam.setParamSign("+");
+           update($queryParam)
+ end
+
+
+ rule "rule44"
+     salience 95
+     when $queryParam: QueryParam(paramSign!= null && paramSign.equals("/"))
+     then
+          final Logger LOGGER = LoggerFactory.getLogger("除法 规则引擎4,执行之后插入加法计算并将自己修改为减法");
+          LOGGER.info("参数:param1="+$queryParam.getParam1()+ ", param2="+$queryParam.getParam2()+"; paramSign="+$queryParam.getParamSign());
+          resultParam = ruleDemoService.divParam($queryParam);
+
+          QueryParam param = new QueryParam();
+          param.setParam1(1);
+          param.setParam2(5);
+          param.setParamSign("+");
+          insert(param);
+
+          modify($queryParam){
+          setParamSign("-")
+          }
+
+//          delete(param);
+  end

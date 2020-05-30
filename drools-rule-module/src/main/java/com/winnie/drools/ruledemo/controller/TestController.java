@@ -60,11 +60,6 @@ public class TestController {
 
         KieServices kieServices = KieServices.Factory.get();
         KieContainer kieContainer = kieServices.newKieClasspathContainer();
-//        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT" );
-//        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
-
-//        KieScanner kScanner = kieServices.newKieScanner(kieContainer);
-//        kScanner.start( 1000L );
         StatelessKieSession kieSession = kieContainer.newStatelessKieSession("KSession1_2");
 
         List<Command> cmds = new ArrayList<>();

@@ -60,6 +60,7 @@
             <version>7.6.0.Final</version>
         </dependency>
 
+        <!--不添加此依赖， KieContainer kieContainer = kieServices.newKieContainer(releaseId)会报错-->
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-ci</artifactId>

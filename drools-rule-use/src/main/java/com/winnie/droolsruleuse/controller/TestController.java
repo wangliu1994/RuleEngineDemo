@@ -4,6 +4,7 @@ import com.winnie.common.entity.QueryParam;
 import com.winnie.common.service.RuleDemoService;
 import io.swagger.annotations.ApiOperation;
 import org.kie.api.KieServices;
+import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.command.Command;
 import org.kie.api.runtime.ExecutionResults;
@@ -39,8 +40,8 @@ public class TestController {
         Integer result = 0;
 
         KieServices kieServices = KieServices.get();
-        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT" );
-        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
+        ReleaseId releaseId = kieServices.newReleaseId("com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT");
+        KieContainer kieContainer = kieServices.newKieContainer(releaseId);
         KieSession kieSession = kieContainer.newKieSession("KSession1_1");
 
         kieSession.insert(queryParam);
@@ -60,15 +61,14 @@ public class TestController {
         Integer result = 0;
 
         KieServices kieServices = KieServices.Factory.get();
-        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT" );
-        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
-
+        ReleaseId releaseId = kieServices.newReleaseId("com.winnie", "drools-rule-module", "0.0.3-SNAPSHOT");
+        KieContainer kieContainer = kieServices.newKieContainer(releaseId);
 //        KieScanner kScanner = kieServices.newKieScanner(kieContainer);
 //        kScanner.start( 1000L );
         StatelessKieSession kieSession = kieContainer.newStatelessKieSession("KSession1_2");
 
         List<Command> cmds = new ArrayList<>();
-        cmds.add(CommandFactory.newInsert(queryParam,"queryParam"));
+        cmds.add(CommandFactory.newInsert(queryParam, "queryParam"));
         cmds.add(CommandFactory.newInsert(result, "resultParam"));
         cmds.add(CommandFactory.newInsert(ruleEngineService, "ruleDemoService"));
 

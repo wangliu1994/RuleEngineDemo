@@ -17,4 +17,10 @@
         <ksession name="KSession3_1" type="stateful" default="false"/>
         <ksession name="KSession3_2" type="stateless" default="false" beliefSystem="jtms"/>
     </kbase>
+
+    <kbase name="KBase4" default="false" eventProcessingMode="stream" equalsBehavior="equality"
+           declarativeAgenda="enabled" packages="droolsRule4">
+        <ksession name="KSession4_1" type="stateful" default="false"/>
+        <ksession name="KSession4_2" type="stateless" default="false"/>
+    </kbase>
 </kmodule>
