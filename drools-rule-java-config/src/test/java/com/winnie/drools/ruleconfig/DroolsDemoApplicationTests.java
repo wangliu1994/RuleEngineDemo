@@ -1,8 +1,8 @@
 package com.winnie.drools.ruleconfig;
 
-import com.winnie.drools.ruleconfig.entity.QueryParam;
-import com.winnie.drools.ruleconfig.entity.ResultParam;
-import com.winnie.drools.ruleconfig.service.RuleDemoService;
+import com.winnie.common.entity.QueryParam;
+import com.winnie.common.entity.ResultParam;
+import com.winnie.common.service.RuleDemoService;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;

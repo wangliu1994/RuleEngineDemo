@@ -1,6 +1,7 @@
 package com.example.easyrule2xdemo.service;
 
-import com.example.easyrule2xdemo.entity.QueryParam;
+import com.winnie.common.entity.QueryParam;
+import com.winnie.common.service.RuleDemoService;
 import org.springframework.stereotype.Service;
 
 /**

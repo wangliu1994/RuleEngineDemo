@@ -1,6 +1,7 @@
 package com.winnie.drools.ruleconfig.service;
 
-import com.winnie.drools.ruleconfig.entity.QueryParam;
+import com.winnie.common.entity.QueryParam;
+import com.winnie.common.service.RuleDemoService;
 import org.springframework.stereotype.Service;
 
 /**

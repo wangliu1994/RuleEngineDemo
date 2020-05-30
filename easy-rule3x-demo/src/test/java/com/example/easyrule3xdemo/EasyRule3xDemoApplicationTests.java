@@ -1,8 +1,8 @@
 package com.example.easyrule3xdemo;
 
-import com.example.easyrule3xdemo.entity.QueryParam;
+import com.winnie.common.entity.QueryParam;
 import com.example.easyrule3xdemo.rule.*;
-import com.example.easyrule3xdemo.service.RuleDemoService;
+import com.winnie.common.service.RuleDemoService;
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rule;
 import org.jeasy.rules.api.Rules;

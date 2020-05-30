@@ -6,13 +6,15 @@
 
     <groupId>com.winnie</groupId>
     <artifactId>rule-engine-demo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>drools-rule-demo</module>
+        <module>drools-rule-module</module>
         <module>drools-rule-java-config</module>
         <module>easy-rule2x-demo</module>
         <module>easy-rule3x-demo</module>
+        <module>common</module>
     </modules>
 
 </project>

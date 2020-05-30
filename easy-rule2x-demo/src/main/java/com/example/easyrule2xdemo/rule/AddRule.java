@@ -1,7 +1,7 @@
 package com.example.easyrule2xdemo.rule;
 
-import com.example.easyrule2xdemo.entity.QueryParam;
-import com.example.easyrule2xdemo.service.RuleDemoService;
+import com.winnie.common.entity.QueryParam;
+import com.winnie.common.service.RuleDemoService;
 import org.easyrules.annotation.Action;
 import org.easyrules.annotation.Condition;
 import org.easyrules.annotation.Priority;

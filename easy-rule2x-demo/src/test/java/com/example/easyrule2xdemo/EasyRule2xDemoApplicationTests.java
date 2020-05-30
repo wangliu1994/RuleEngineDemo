@@ -1,8 +1,8 @@
 package com.example.easyrule2xdemo;
 
-import com.example.easyrule2xdemo.entity.QueryParam;
 import com.example.easyrule2xdemo.rule.*;
-import com.example.easyrule2xdemo.service.RuleDemoService;
+import com.winnie.common.entity.QueryParam;
+import com.winnie.common.service.RuleDemoService;
 import org.easyrules.api.RulesEngine;
 import org.easyrules.core.RulesEngineBuilder;
 import org.junit.jupiter.api.Test;

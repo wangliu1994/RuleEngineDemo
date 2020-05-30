@@ -1,7 +1,7 @@
 package com.winnie.drools.ruleconfig.controller;
 
-import com.winnie.drools.ruleconfig.entity.QueryParam;
-import com.winnie.drools.ruleconfig.service.RuleDemoService;
+import com.winnie.common.entity.QueryParam;
+import com.winnie.common.service.RuleDemoService;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
