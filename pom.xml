@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>drools-rule-demo1</module>
-        <module>drools-rule-demo3</module>
+        <module>drools-rule-demo</module>
+        <module>drools-rule-java-config</module>
         <module>easy-rule2x-demo</module>
         <module>easy-rule3x-demo</module>
     </modules>
