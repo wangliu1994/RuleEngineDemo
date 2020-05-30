@@ -39,8 +39,7 @@ public class TestController {
         Integer result = 0;
 
         KieServices kieServices = KieServices.get();
-        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT" );
-        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
         KieSession kieSession = kieContainer.newKieSession("KSession1_1");
 
         kieSession.insert(queryParam);
@@ -60,8 +59,9 @@ public class TestController {
         Integer result = 0;
 
         KieServices kieServices = KieServices.Factory.get();
-        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT" );
-        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
+        KieContainer kieContainer = kieServices.newKieClasspathContainer();
+//        ReleaseId releaseId = kieServices.newReleaseId( "com.winnie", "drools-rule-module", "0.0.1-SNAPSHOT" );
+//        KieContainer kieContainer = kieServices.newKieContainer( releaseId );
 
 //        KieScanner kScanner = kieServices.newKieScanner(kieContainer);
 //        kScanner.start( 1000L );
@@ -70,7 +70,7 @@ public class TestController {
         List<Command> cmds = new ArrayList<>();
         cmds.add(CommandFactory.newInsert(queryParam,"queryParam"));
         cmds.add(CommandFactory.newInsert(result, "resultParam"));
-//        cmds.add(CommandFactory.newInsert(ruleEngineService, "ruleDemoService"));
+        cmds.add(CommandFactory.newInsert(ruleEngineService, "ruleDemoService"));
 
         logger.info("queryParam1.result = {}", queryParam.getResult());
         ExecutionResults results = kieSession.execute(CommandFactory.newBatchExecution(cmds));
