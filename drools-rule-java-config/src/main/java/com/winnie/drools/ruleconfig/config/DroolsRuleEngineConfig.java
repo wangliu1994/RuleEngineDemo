@@ -10,6 +10,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.spring.KModuleBeanFactoryPostProcessor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,15 +27,12 @@ import java.io.IOException;
  */
 @Configuration
 @Slf4j
-public class DroolsRuleEngineConfig implements EnvironmentAware {
+public class DroolsRuleEngineConfig{
     private final KieServices kieServices = KieServices.get();
 
+    @Value("${drools.rules-path}")
     private String rulesPath;
 
-    @Override
-    public void setEnvironment(Environment environment) {
-        rulesPath = environment.getProperty("drools.rules-path");
-    }
 
     @Bean
     public KieFileSystem kieFileSystem() throws FileNotFoundException {
@@ -94,10 +92,5 @@ public class DroolsRuleEngineConfig implements EnvironmentAware {
     @Bean
     public KieSession kieSession() throws IOException {
         return kieContainer().newKieSession();
-    }
-
-    @Bean
-    public KModuleBeanFactoryPostProcessor kiePostProcessor() {
-        return new KModuleBeanFactoryPostProcessor();
     }
 }
