@@ -4,6 +4,7 @@ import com.winnie.common.entity.QueryParam;
 import com.winnie.common.entity.ResultParam;
 import com.winnie.common.service.RuleDemoService;
 import org.junit.jupiter.api.Test;
+import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,7 @@ import javax.annotation.Resource;
 @SpringBootTest
 class DroolsDemoApplicationTests {
     @Resource
-    private KieSession kieSession;
-
+    private KieContainer kieContainer;
     @Resource
     private RuleDemoService ruleEngineService;
 
@@ -28,6 +28,8 @@ class DroolsDemoApplicationTests {
 
     @Test
     void testDrools() {
+        KieSession kieSession = kieContainer.newKieSession();
+
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
@@ -38,6 +40,7 @@ class DroolsDemoApplicationTests {
         kieSession.insert(result);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
@@ -51,6 +54,8 @@ class DroolsDemoApplicationTests {
 
     @Test
     void testDroolsAdd() {
+        KieSession kieSession = kieContainer.newKieSession();
+
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
@@ -62,6 +67,7 @@ class DroolsDemoApplicationTests {
         kieSession.insert(result);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
@@ -74,6 +80,7 @@ class DroolsDemoApplicationTests {
 
     @Test
     void testDroolsAdd1() {
+        KieSession kieSession = kieContainer.newKieSession();
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
@@ -87,6 +94,7 @@ class DroolsDemoApplicationTests {
         kieSession.insert(result);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，
@@ -99,6 +107,8 @@ class DroolsDemoApplicationTests {
 
     @Test
     void testDroolsSub() {
+        KieSession kieSession = kieContainer.newKieSession();
+
         QueryParam queryParam2 = new QueryParam();
         queryParam2.setParam1(10);
         queryParam2.setParam2(5);
@@ -106,12 +116,15 @@ class DroolsDemoApplicationTests {
 
         kieSession.insert(queryParam2);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
         logger.info("queryParam2.result = {}", queryParam2.getResult());
     }
 
     @Test
     void testDroolsSub1() {
+        KieSession kieSession = kieContainer.newKieSession();
+
         QueryParam queryParam2 = new QueryParam();
         queryParam2.setParam1(10);
         queryParam2.setParam2(5);
@@ -121,12 +134,15 @@ class DroolsDemoApplicationTests {
         //ruleEngineService也可以在这里插入，即在drl写规则时直接使用,见param_check_2.drl
         kieSession.insert(ruleEngineService);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
         logger.info("queryParam2.result = {}", queryParam2.getResult());
     }
 
     @Test
     void testDroolsMul() {
+        KieSession kieSession = kieContainer.newKieSession();
+
         QueryParam queryParam3 = new QueryParam();
         queryParam3.setParam1(10);
         queryParam3.setParam2(5);
@@ -135,12 +151,15 @@ class DroolsDemoApplicationTests {
 
         kieSession.insert(queryParam3);
         kieSession.insert(resultParam);
+        kieSession.dispose();
 
         kieSession.fireAllRules();
         logger.info("queryParam3.result = {}", resultParam.getResult());
     }
- @Test
+
+    @Test
     void testDroolsMul1() {
+        KieSession kieSession = kieContainer.newKieSession();
         QueryParam queryParam3 = new QueryParam();
         queryParam3.setParam1(10);
         queryParam3.setParam2(5);
@@ -153,11 +172,13 @@ class DroolsDemoApplicationTests {
         kieSession.insert(resultParam);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam3.result = {}", resultParam.getResult());
     }
 
     @Test
     void testDroolsDiv() {
+        KieSession kieSession = kieContainer.newKieSession();
         QueryParam queryParam4 = new QueryParam();
         queryParam4.setParam1(10);
         queryParam4.setParam2(5);
@@ -167,11 +188,13 @@ class DroolsDemoApplicationTests {
         kieSession.insert(queryParam4);
         kieSession.insert(resultParam);
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam4.result = {}", resultParam.getResult());
     }
 
     @Test
     void testDroolsDiv1() {
+        KieSession kieSession = kieContainer.newKieSession();
         QueryParam queryParam4 = new QueryParam();
         queryParam4.setParam1(10);
         queryParam4.setParam2(5);
@@ -183,6 +206,7 @@ class DroolsDemoApplicationTests {
         kieSession.insert(ruleEngineService);
         kieSession.insert(resultParam);
         kieSession.fireAllRules();
+        kieSession.dispose();
         logger.info("queryParam4.result = {}", resultParam.getResult());
     }
 }

@@ -2,6 +2,7 @@ package com.winnie.drools.ruleconfig.controller;
 
 import com.winnie.common.entity.QueryParam;
 import com.winnie.common.service.RuleDemoService;
+import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.io.File;
 @RestController
 public class TestController {
     @Resource
-    private KieSession kieSession;
+    private KieContainer kieContainer;
 
     @Resource
     private RuleDemoService ruleEngineService;
@@ -28,6 +29,8 @@ public class TestController {
 
     @GetMapping("test")
     public void test(){
+        KieSession kieSession = kieContainer.newKieSession();
+
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
@@ -39,6 +42,7 @@ public class TestController {
         kieSession.insert(result);
 
         kieSession.fireAllRules();
+        kieSession.dispose();
         //通过打印日志可以看到
         //在drools中，这个传递数据进去的对象，术语叫 Fact对象。Fact对象是一个普通的java bean，
         // 规则中可以对当前的对象进行任何的读写操作，调用该对象提供的方法，当一个java bean插入到workingMemory中，

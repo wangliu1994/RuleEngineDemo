@@ -3,9 +3,8 @@ package com.winnie.drools.ruleconfig.config;
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
-import org.kie.api.builder.KieBuilder;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.KieRepository;
+import org.kie.api.builder.*;
+import org.kie.api.builder.model.KieModuleModel;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.io.ResourceFactory;
@@ -33,9 +32,30 @@ public class DroolsRuleEngineConfig{
     @Value("${drools.rules-path}")
     private String rulesPath;
 
-
     @Bean
-    public KieFileSystem kieFileSystem() throws FileNotFoundException {
+    public KieContainer kieContainer() throws IOException {
+        KieFileSystem kieFileSystem = kieFileSystem();
+        ReleaseId releaseId = kieServices.newReleaseId(
+                "com.winnie", "drools", "1.0.0");
+        kieFileSystem.generateAndWritePomXML(releaseId);
+        KieModuleModel kModuleModel = kieServices.newKieModuleModel();
+        kModuleModel.newKieBaseModel("kieBase")
+                .setDefault(true)
+                .newKieSessionModel("kieSession")
+                .setDefault(true);
+        kieFileSystem.writeKModuleXML(kModuleModel.toXML());
+
+        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
+        kieBuilder.buildAll();
+        if (kieBuilder.getResults().hasMessages(Message.Level.ERROR)) {
+            log.error(kieBuilder.getResults().getMessages().toString());
+            throw new IllegalStateException("规则文件编译报错");
+        }
+        return kieServices.newKieContainer(releaseId);
+    }
+
+
+    private KieFileSystem kieFileSystem() throws FileNotFoundException {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
         File folder = new File(rulesPath);
         //可能是配置的相对路径
@@ -59,38 +79,5 @@ public class DroolsRuleEngineConfig{
             }
         }
         return kieFileSystem;
-    }
-
-//    @Bean
-//    public KieFileSystem kieFileSystem() throws IOException {
-//        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-//        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-//        Resource[] files = resourcePatternResolver.getResources("classpath*:" + rulesPath + "*.*");
-//        String path = null;
-//        for (Resource file : files) {
-//            path = rulesPath + file.getFilename();
-//            log.info("path="+path);
-//            kieFileSystem.write(ResourceFactory.newClassPathResource(path, "UTF-8"));
-//        }
-//        return kieFileSystem;
-//    }
-
-    @Bean
-    public KieContainer kieContainer() throws IOException {
-        KieRepository kieRepository = kieServices.getRepository();
-        kieRepository.addKieModule(kieRepository::getDefaultReleaseId);
-        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem());
-        kieBuilder.buildAll();
-        return kieServices.newKieContainer(kieRepository.getDefaultReleaseId());
-    }
-
-    @Bean
-    public KieBase kieBase() throws IOException {
-        return kieContainer().getKieBase();
-    }
-
-    @Bean
-    public KieSession kieSession() throws IOException {
-        return kieContainer().newKieSession();
     }
 }
