@@ -9,6 +9,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  * @date : 2020/6/2
  * @desc
  */
+@SpringBootTest
 public class KieActionTest {
     @Resource
     private RuleDemoService ruleEngineService;

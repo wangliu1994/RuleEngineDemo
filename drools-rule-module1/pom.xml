@@ -9,11 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.winnie</groupId>
-    <artifactId>drools-rule-module</artifactId>
+    <artifactId>drools-rule-module1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>drools-rule-module</name>
-    <!--<packaging>kjar</packaging>-->
-    <!--本例使用kmodule.xml的方式配置drools-->
+    <name>drools-rule-module1</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -24,28 +22,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!--swagger-->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>1.9.6</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
         </dependency>
 
         <!--drools规则引擎-->
@@ -62,27 +38,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.drools</groupId>
-            <artifactId>drools-model-compiler</artifactId>
-            <version>7.6.0.Final</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-spring</artifactId>
             <version>7.6.0.Final</version>
-        </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.kie</groupId>-->
-            <!--<artifactId>kie-ci</artifactId>-->
-            <!--<version>7.6.0.Final</version>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>com.winnie</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -104,12 +62,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.kie</groupId>-->
-                <!--<artifactId>kie-maven-plugin</artifactId>-->
-                <!--<version>7.37.0.Final</version>-->
-                <!--<extensions>true</extensions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 

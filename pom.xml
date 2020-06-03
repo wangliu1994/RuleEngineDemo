@@ -11,6 +11,7 @@
 
     <modules>
         <module>drools-rule-module</module>
+        <module>drools-rule-module1</module>
         <module>drools-rule-java-config</module>
         <module>easy-rule2x-demo</module>
         <module>easy-rule3x-demo</module>
