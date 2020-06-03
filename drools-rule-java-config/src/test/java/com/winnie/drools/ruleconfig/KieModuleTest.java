@@ -80,9 +80,9 @@ public class KieModuleTest {
 
 
         kieFileSystem.write("src/main/resources/rules/rule", "hello");
-        kieFileSystem.write("src/main/resources/rules/rule1.drl",
+        kieFileSystem.write("src/main/resources/rule1.drl",
                 kieResources.newFileSystemResource(new File("src/main/resources/action_check_rule1.drl")));
-        //不指定pathname的话，默认的是文件名+.properties路径
+        //不指定pathname的话，默认的会加载成: "src/main/resources/文件全路径"和"src/main/resources/文件全路径+.properties"两个文件
 //        kieFileSystem.write(kieResources.newFileSystemResource(new File("src/main/resources/action_check_rule1.drl")));
 
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);

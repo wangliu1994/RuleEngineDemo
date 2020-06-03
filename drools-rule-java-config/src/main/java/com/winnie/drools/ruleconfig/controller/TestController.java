@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.File;
 
 /**
  * @author : winnie [wangliu023@qq.com]
@@ -30,7 +31,7 @@ public class TestController {
         QueryParam queryParam1 = new QueryParam();
         queryParam1.setParam1(10);
         queryParam1.setParam2(5);
-        queryParam1.setParamSign("++");
+        queryParam1.setParamSign("+");
         Integer result = 0;
 
         kieSession.insert(queryParam1);
@@ -46,5 +47,12 @@ public class TestController {
 
         //通过打印日志可以看到， Integer result在规则中被赋了其他值，不是本身了，所以获取不到
         logger.info("result = {}", result);
+    }
+
+    @GetMapping("testFile")
+    public String testFile(){
+        File file = new File("").getAbsoluteFile();
+        File file1 = new File(file, "").getAbsoluteFile();
+        return file1.getAbsolutePath();
     }
 }
